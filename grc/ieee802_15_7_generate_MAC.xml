@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<block>
+	<name>Generate MAC</name>
+	<key>ieee802_15_7_generate_MAC</key>
+	<category>IEEE802.15.7</category>
+	<import>import ieee802_15_7</import>
+	<make>ieee802_15_7.generate_MAC($dst_vpan_id, $dst_addr, $src_vpan_id, $src_addr)</make>
+
+	<param>
+		<name>DST VPAN ID</name>
+		<key>dst_vpan_id</key>
+		<value>[0x23, 0x23]</value>
+		<type>int_vector</type>
+	</param>
+
+	<param>
+		<name>DST ADDR</name>
+		<key>dst_addr</key>
+		<value>[0x23, 0x23]</value>
+		<type>int_vector</type>
+	</param>
+
+	<param>
+		<name>SRC VPAN ID</name>
+		<key>src_vpan_id</key>
+		<value>[0xff, 0xff]</value>
+		<type>int_vector</type>
+	</param>
+
+	<param>
+		<name>SRC ADDR</name>
+		<key>src_addr</key>
+		<value>[0xff, 0xff]</value>
+		<type>int_vector</type>
+	</param>
+
+	<check>len($dst_vpan_id) == 2</check>
+	<check>len($dst_addr) == 2</check>
+	<check>len($src_vpan_id) == 2</check>
+	<check>len($src_addr) == 2</check>
+	<check>all([x >= 0 and 255 >= x for x in $dst_vpan_id])</check>
+	<check>all([x >= 0 and 255 >= x for x in $dst_addr])</check>
+	<check>all([x >= 0 and 255 >= x for x in $src_vpan_id])</check>
+	<check>all([x >= 0 and 255 >= x for x in $src_addr])</check>
+
+	<sink>
+		<name>app in</name>
+		<type>message</type>
+		<optional>1</optional>
+	</sink>
+
+	<source>
+		<name>phy out</name>
+		<type>message</type>
+		<optional>1</optional>
+	</source>
+</block>
